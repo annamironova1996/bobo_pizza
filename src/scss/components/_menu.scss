@@ -1,0 +1,30 @@
+.menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu {
+    padding: 40px 0;
+}
+
+.menu__row {
+    display: flex;
+    gap: 20px;
+    li {
+        padding: 12px 20px;
+        border-radius: 40px;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s all;
+    }
+
+    li:hover,
+    li:focus,
+    li.active {
+        background-color: var(--accent);
+        color: var(--page-bg);
+    }
+}
