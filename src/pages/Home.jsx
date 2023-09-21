@@ -1,53 +1,86 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import qs from 'qs';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    setActiveMenu,
+    setCurrentPage,
+    setFilters,
+    selectFilterSlice,
+} from '../redux/slices/filterSlice';
+
+import { fetchPizzas, selectPizzaSliceItems } from '../redux/slices/pizzaSlice';
 import Menu from '../components/Menu';
 import Card from '../components/Card';
-import Banners from '../components/Banners';
 import Sort from '../components/Sort';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
-    const [pizza, setPizza] = useState([]);
-    const [banners, setBanners] = useState([]);
-    const [activeMenu, setActiveMenu] = useState(0);
-    const [activePopupItem, setActivePopupItem] = useState({
-        name: 'популярности',
-        sort: 'rating',
-    });
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const isSearch = useRef(false);
+    const isMounted = useRef(false);
+    const { activeMenu, currentPage } = useSelector(selectFilterSlice);
 
+    const pizza = useSelector(selectPizzaSliceItems);
+    // const [banners, setBanners] = useState([]);
+
+    const onClickMenu = (id) => {
+        dispatch(setActiveMenu(id));
+    };
+
+    const onChangePage = (number) => {
+        dispatch(setCurrentPage(number));
+    };
+    //если был первый рендер, то проверяем URL-параметры и сохраняем в редкусе
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const pizzaAll = await axios.get(
-                    'http://localhost:3005/pizza?category=' + activeMenu
-                );
-                const bannersAll = await axios.get(
-                    'http://localhost:3005/banners'
-                );
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            //const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty)
 
-                setPizza(pizzaAll.data);
-                setBanners(bannersAll.data);
-            } catch (error) {
-                console.log('ошибка при запросе данных');
-            }
+            dispatch(
+                setFilters({
+                    ...params,
+                    //sort
+                })
+            );
+            isSearch.current = true;
         }
-        fetchData();
-    }, [activeMenu]);
-    console.log(banners);
+    }, []);
+    //если был первый рендер, то запрашиваем пиццы
+    useEffect(() => {
+        if (!isSearch.current) {
+            dispatch(fetchPizzas({ currentPage }));
+        }
+        isSearch.current = false;
+    }, [currentPage]);
+    // если изменили параметры и был первый рендер
+    useEffect(() => {
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                currentPage,
+                //activeMenu,
+            });
+            navigate(`?${queryString}`);
+        }
+        isMounted.current = true;
+    }, [activeMenu, currentPage]);
     return (
         <main>
             <section className="banner">
                 <div className="container">
-                    <article className="banner__wrapper">
+                    {/*  <article className="banner__wrapper">
                         {banners?.map((banner, index) => {
                             return (
-                                <Banners
+                                <img
+                                    src={banner.img}
                                     key={index}
-                                    {...banner}
+                                    alt="Баннер"
                                 />
                             );
                         })}
-                    </article>
+                    </article> */}
                 </div>
             </section>
             <section>
@@ -55,12 +88,9 @@ const Home = () => {
                     <div className="menu-wrapper">
                         <Menu
                             activeMenu={activeMenu}
-                            setActiveMenu={setActiveMenu}
+                            setActiveMenu={onClickMenu}
                         />
-                        <Sort
-                            activePopupItem={activePopupItem}
-                            setActivePopupItem={(id) => setActivePopupItem(id)}
-                        />
+                        <Sort />
                     </div>
                 </div>
             </section>
@@ -77,6 +107,10 @@ const Home = () => {
                             );
                         })}
                     </div>
+                    <Pagination
+                        currentPage={currentPage}
+                        onChangePage={onChangePage}
+                    />
                 </div>
             </section>
         </main>

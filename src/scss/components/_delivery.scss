@@ -1,0 +1,52 @@
+.delivery {
+    padding: 50px 0;
+    h2 {
+        margin-top: 25px;
+        font-size: 33px;
+        font-weight: 500;
+    }
+
+    address {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 5px 0;
+    }
+
+    p {
+        font-size: 21px;
+        margin: 10px 0;
+    }
+
+    img {
+        width: 50%;
+    }
+}
+
+.delivery__title {
+    font-size: 23px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.delivery__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.delivery__time {
+    li:nth-child(1) {
+        margin: 5px 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    li {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+.delivery__link {
+    color: var(--accent);
+}

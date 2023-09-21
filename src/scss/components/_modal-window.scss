@@ -1,0 +1,60 @@
+.modal-window {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+
+    h2 {
+        font-size: 30px;
+    }
+}
+
+.modal-window__card {
+    padding: 50px 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--page-bg);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.modal-window__form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    input {
+        width: 300px;
+
+        &::placeholder {
+            color: var(--page-bg);
+        }
+    }
+}
+
+.modal-window-input {
+    background-color: red;
+    width: 300px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.window-modal__close {
+    color: var(--page-bg);
+    position: absolute;
+    width: 30px;
+    top: 480px;
+    right: 570px;
+    cursor: pointer;
+
+    &:hover {
+        animation: close 3s;
+    }
+}

@@ -1,19 +1,32 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    setActivePopupItem,
+    selectFilterSlicePopup,
+} from '../redux/slices/filterSlice';
 
-const Sort = ({ activePopupItem, setActivePopupItem }) => {
+const popupItem = [
+    { name: 'популярности', sort: 'rating' },
+    { name: 'алфавиту', sort: 'title' },
+];
+
+const Sort = () => {
+    const dispatch = useDispatch();
+    const activePopupItem = useSelector(selectFilterSlicePopup);
+
     const [open, setOpen] = useState(false);
-
-    const popupItem = [
-        { name: 'популярности', sort: 'rating' },
-        { name: 'алфавиту', sort: 'title' },
-    ];
+    const sortRef = useRef();
 
     const onClickPopupItem = (obj) => {
-        setActivePopupItem(obj);
+        dispatch(setActivePopupItem(obj));
         setOpen(false);
     };
+
     return (
-        <div className="sort">
+        <div
+            ref={sortRef}
+            className="sort"
+        >
             <div className="sort__label">
                 <svg
                     width="10"

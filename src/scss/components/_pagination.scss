@@ -1,0 +1,41 @@
+.pagination {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination__buttons {
+    display: flex;
+    gap: 6px;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--accent);
+        border-radius: 50px;
+        color: var(--accent);
+        cursor: pointer;
+    }
+    a:hover,
+    a:focus {
+        background-color: var(--accent);
+        color: var(--page-bg);
+    }
+
+    a:nth-child(1) {
+        margin-right: 10px;
+    }
+    a:nth-child(6) {
+        margin-left: 10px;
+    }
+
+    .selected {
+        a {
+            background-color: var(--accent);
+            color: var(--page-bg);
+        }
+    }
+}

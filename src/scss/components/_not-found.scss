@@ -1,0 +1,19 @@
+.not-found {
+    padding: 250px 0;
+}
+
+.not-found__components {
+    text-align: center;
+
+    img {
+        margin: 0 auto;
+        max-width: 300px;
+    }
+
+    p {
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+}

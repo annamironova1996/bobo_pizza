@@ -29,12 +29,44 @@
     height: 100%;
     z-index: 1;
     visibility: hidden;
+
     opacity: 0;
 }
 
 .overlayVisible {
     visibility: visible;
     opacity: 1;
+}
+
+.transparent-btn {
+    border: 1px solid var(--accent);
+    border-radius: 30px;
+    padding: 15px 17px;
+    color: var(--accent);
+    cursor: pointer;
+    transition: 0.3s all;
+
+    &:hover,
+    &:focus {
+        background-color: var(--accent);
+        color: var(--page-bg);
+    }
+
+    &:active {
+        background-color: #f57b16;
+    }
+}
+
+@keyframes close {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
 }
 
 @mixin noselect {

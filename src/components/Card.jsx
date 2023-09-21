@@ -1,7 +1,30 @@
-import React from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Card = ({ title, description, sizes, img, dough, price }) => {
-    console.log(dough);
+import { addItem, selectCartItemId } from '../redux/slices/cartSlice';
+
+const doughNames = ['тонкое, традиционное'];
+
+const Card = ({ id, title, description, sizes, img, dough, price }) => {
+    const dispatch = useDispatch();
+    const cartItem = useSelector(selectCartItemId(id));
+    const [activeDough, setActiveDough] = useState(0);
+    const [activeSizes, setActiveSizes] = useState(0);
+
+    const addedCount = cartItem ? cartItem.count : 0;
+
+    const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            img,
+            dough: doughNames[activeDough],
+            activeSizes,
+        };
+        dispatch(addItem(item));
+    };
+
     return (
         <article className="card">
             <img
@@ -15,19 +38,44 @@ const Card = ({ title, description, sizes, img, dough, price }) => {
             <div className="card__options">
                 <div className="cadr__dough">
                     {dough?.map((item, index) => {
-                        return <button key={index}>{item}</button>;
+                        return (
+                            <button
+                                onClick={() => setActiveDough(index)}
+                                className={
+                                    activeDough === index ? 'active' : ''
+                                }
+                                key={index}
+                            >
+                                {item}
+                            </button>
+                        );
                     })}
                 </div>
                 <div className="card__sizes">
                     {sizes?.map((size, index) => {
-                        return <button key={index}>{size}</button>;
+                        return (
+                            <button
+                                onClick={() => setActiveSizes(index)}
+                                className={
+                                    activeSizes === index ? 'active' : ''
+                                }
+                                key={index}
+                            >
+                                {size}
+                            </button>
+                        );
                     })}
                 </div>
             </div>
 
             <div className="card__row">
                 <span>от {price}₽</span>
-                <button>Добавить</button>
+                <button
+                    onClick={onClickAdd}
+                    className="transparent-btn"
+                >
+                    Добавить{addedCount > 0 && <span>{addedCount}</span>}
+                </button>
             </div>
         </article>
     );
