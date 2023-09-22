@@ -2,10 +2,20 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
-const Header = ({ onCartClick, onRegisterClick, onLoginClick }) => {
+interface HeaderProps {
+    onCartClick: () => void;
+    onRegisterClick: () => void;
+    onLoginClick: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({
+    onCartClick,
+    onRegisterClick,
+    onLoginClick,
+}) => {
     const { items, totalPrice } = useSelector(selectCart);
 
-    const totalCount = items.reduce((sum, item) => {
+    const totalCount = items.reduce((sum: number, item) => {
         return item.count + sum;
     }, 0);
 

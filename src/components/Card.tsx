@@ -5,7 +5,25 @@ import { addItem, selectCartItemId } from '../redux/slices/cartSlice';
 
 const doughNames = ['тонкое, традиционное'];
 
-const Card = ({ id, title, description, sizes, img, dough, price }) => {
+interface CardProps {
+    id: number;
+    title: string;
+    description: string;
+    sizes: string[];
+    img: string;
+    dough: string[];
+    price: number;
+}
+
+const Card: React.FC<CardProps> = ({
+    id,
+    title,
+    description,
+    sizes,
+    img,
+    dough,
+    price,
+}) => {
     const dispatch = useDispatch();
     const cartItem = useSelector(selectCartItemId(id));
     const [activeDough, setActiveDough] = useState(0);

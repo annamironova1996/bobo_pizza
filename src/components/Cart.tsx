@@ -6,11 +6,16 @@ import CartItem from './CartItem';
 import { clearItems, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from './CartEmpty';
 
-const Cart = ({ openCart, onClick }) => {
+interface CartProps {
+    openCart: boolean;
+    onClick: () => void;
+}
+
+const Cart: React.FC<CartProps> = ({ openCart, onClick }) => {
     const dispatch = useDispatch();
     const { totalPrice, items } = useSelector(selectCart);
 
-    const totalCount = items.reduce((sum, item) => {
+    const totalCount = items.reduce((sum: number, item) => {
         return item.count + sum;
     }, 0);
 

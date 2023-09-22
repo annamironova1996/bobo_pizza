@@ -1,6 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
-const initialState = {
+interface ActivePopupElem {
+    name: string;
+    sort: string;
+}
+
+interface InitialStateElem {
+    activeMenu: number;
+    currentPage: number;
+    activePopupItem: ActivePopupElem;
+}
+
+const initialState: InitialStateElem = {
     activeMenu: 0,
     currentPage: 1,
     activePopupItem: {
@@ -13,13 +25,13 @@ export const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        setActiveMenu(state, action) {
+        setActiveMenu(state, action: PayloadAction<number>) {
             state.activeMenu = action.payload;
         },
-        setActivePopupItem(state, action) {
+        setActivePopupItem(state, action: PayloadAction<ActivePopupElem>) {
             state.activePopupItem = action.payload;
         },
-        setCurrentPage(state, action) {
+        setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload;
         },
         setFilters(state, action) {
@@ -30,9 +42,9 @@ export const filterSlice = createSlice({
     },
 });
 
-export const selectFilterSlice = (state) => state.filterSlice;
+export const selectFilterSlice = (state: RootState) => state.filterSlice;
 
-export const selectFilterSlicePopup = (state) =>
+export const selectFilterSlicePopup = (state: RootState) =>
     state.filterSlice.activePopupItem;
 
 export const { setActiveMenu, setActivePopupItem, setCurrentPage, setFilters } =

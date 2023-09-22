@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Menu = ({ activeMenu, setActiveMenu }) => {
+interface MenuProps {
+    activeMenu: number;
+    setActiveMenu: (index: number) => void;
+}
+
+const Menu: React.FC<MenuProps> = ({ activeMenu, setActiveMenu }) => {
     const menu = ['Все', 'Мясные', 'Сырные', 'Овощная', 'Комбо', 'Микс'];
     return (
         <section className="menu">

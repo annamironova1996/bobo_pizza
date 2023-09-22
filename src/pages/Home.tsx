@@ -26,11 +26,11 @@ const Home = () => {
     const pizza = useSelector(selectPizzaSliceItems);
     // const [banners, setBanners] = useState([]);
 
-    const onClickMenu = (id) => {
+    const onClickMenu = (id: number) => {
         dispatch(setActiveMenu(id));
     };
 
-    const onChangePage = (number) => {
+    const onChangePage = (number: number) => {
         dispatch(setCurrentPage(number));
     };
     //если был первый рендер, то проверяем URL-параметры и сохраняем в редкусе

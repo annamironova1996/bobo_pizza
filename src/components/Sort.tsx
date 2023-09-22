@@ -1,11 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     setActivePopupItem,
     selectFilterSlicePopup,
 } from '../redux/slices/filterSlice';
 
-const popupItem = [
+type PopupElem = {
+    name: string;
+    sort: string;
+};
+
+const popupItem: PopupElem[] = [
     { name: 'популярности', sort: 'rating' },
     { name: 'алфавиту', sort: 'title' },
 ];
@@ -15,9 +20,9 @@ const Sort = () => {
     const activePopupItem = useSelector(selectFilterSlicePopup);
 
     const [open, setOpen] = useState(false);
-    const sortRef = useRef();
+    const sortRef = useRef<HTMLDivElement>(null);
 
-    const onClickPopupItem = (obj) => {
+    const onClickPopupItem = (obj: PopupElem) => {
         dispatch(setActivePopupItem(obj));
         setOpen(false);
     };
